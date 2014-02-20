@@ -1,0 +1,63 @@
+<!--
+The MIT License
+
+Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+-->
+ 
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry title="${%Plot group}" help="/plugin/plot/help-group.html">
+      <f:textbox name="portlet.group" field="group" clazz="required" />
+    </f:entry>
+    <f:entry title="${%Jenkins Job Name}">
+      <f:textbox name="portlet.jobName" field="jobName"/>
+    </f:entry>
+    <f:entry title="${%Plot title}" help="/plugin/plot/help-title.html">
+      <f:textbox name="portlet.title" field="title" />
+    </f:entry>
+    <f:entry title="${%Number of builds to include}" help="/plugin/plot/help-numbuilds.html">
+      <f:textbox class="positive-number" name="portlet.numBuilds" field="numBuilds" />
+    </f:entry>
+    <f:entry title="${%Plot y-axis label}" help="/plugin/plot/help-yaxis.html">
+      <f:textbox name="portlet.yaxis" field="yaxis" />
+    </f:entry>
+    <f:entry title="${%Plot style}" help="/plugin/plot/help-style.html">
+      <select name="portlet.style">
+        <f:option value="area" selected="${portlet.style=='area'}">${%Area}</f:option>
+        <f:option value="bar" selected="${portlet.style=='bar'}">${%Bar}</f:option>
+        <f:option value="bar3d" selected="${portlet.style=='bar3d'}">${%Bar 3D}</f:option>
+        <f:option value="line" selected="${portlet.style=='line' || plot.style=='' || plot.style==null}">${%Line}</f:option>
+        <f:option value="line3d" selected="${portlet.style=='line3d'}">${%Line 3D}</f:option>
+        <f:option value="stackedArea" selected="${portlet.style=='stackedArea'}">${%Stacked Area}</f:option>
+        <f:option value="stackedbar" selected="${portlet.style=='stackedbar'}">${%Stacked Bar}</f:option>
+        <f:option value="stackedbar3d" selected="${portlet.style=='stackedbar3d'}">${%Stacked Bar 3D}</f:option>
+        <f:option value="waterfall" selected="${portlet.style=='waterfall'}">${%Waterfall}</f:option>
+      </select>
+    </f:entry>
+    <f:entry title="${%Jacoco CSV File Path}">
+		<f:textbox name="portlet.csvFileName" field="csvFileName" />
+    </f:entry>
+    <f:entry>
+      <f:block>
+        <hr/>
+      </f:block>
+    </f:entry>
+</j:jelly>
