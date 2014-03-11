@@ -9,6 +9,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Run;
 import hudson.util.ChartUtil;
+import hudson.util.Graph;
 import hudson.util.ShiftedCategoryAxis;
 
 import java.awt.BasicStroke;
@@ -410,6 +411,26 @@ public class Plot implements Comparable<Plot> {
         // descriptions (used for tool tips) have changed
         generatePlot(true);
         ChartUtil.generateGraph(req, rsp, plot, getWidth(), getHeight());
+    }
+    
+    /**
+     * Generates and returns the graph object
+     * 
+     * @param req the incoming request
+     * @return graph object created based on input data
+     * @throws IOException
+     */
+    public Graph plotCsvData(StaplerRequest req) throws IOException {
+
+    	setWidth(req);
+        setHeight(req);
+    	generatePlot(true);
+    	return new Graph(-1, getWidth(), getHeight()) {
+    	      @Override
+    	      protected JFreeChart createGraph() {
+    	        return plot;
+    	      }
+    	};
     }
 
     /**

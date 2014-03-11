@@ -7,6 +7,8 @@ package hudson.plugins.plot;
 
 import hudson.FilePath;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
+import org.jsoup.Jsoup;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -150,7 +153,7 @@ public class XMLSeries extends Series {
 
 	            in = seriesFiles[0].read();
 		        // load existing plot file
-	        	inputSource = new InputSource(in);
+	        	inputSource = new InputSource(sanitizeInput(in));
 	        } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Exception reading plot series data from " + seriesFiles[0], e);
 				return null;
@@ -268,6 +271,11 @@ public class XMLSeries extends Series {
 
         return null;
     }
+	
+	private InputStream sanitizeInput(InputStream in) throws IOException {
+        String sanitizedInput = Jsoup.parse(IOUtils.toString(in)).html();
+        return new ByteArrayInputStream(sanitizedInput.getBytes());
+	}
 
 	private void addNodeToList(List<PlotPoint> ret, Node n) {
 		NamedNodeMap nodeMap = n.getAttributes();
